@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react';// eslint-disable-next-line
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 class UserManage extends Component {

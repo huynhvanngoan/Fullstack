@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
-import appReducer from "./appReducer";
+import appReducer from "./appReducer";// eslint-disable-next-line
 import adminReducer from "./adminReducer";
 import userReducer from "./userReducer";
 
@@ -22,7 +22,7 @@ const userPersistConfig = {
     whitelist: ['isLoggedIn', 'userInfo']
 };
 
-
+// eslint-disable-next-line
 export default (history) => combineReducers({
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),
