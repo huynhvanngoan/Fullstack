@@ -105,10 +105,9 @@ let createNewUser = (data) => {
                     errCode: 1,
                     errMessage: 'Your email is already in use, Please try again another email'
                 });
-            }
-
-            let hashPassWordFromBcrypt = await hashUserPassword(data.password)
-            await db.User.create({
+            } else {
+                let hashPassWordFromBcrypt = await hashUserPassword(data.password)
+                await db.User.create({
                 email: data.email,
                 password: hashPassWordFromBcrypt,
                 firstName: data.firstName,
@@ -122,7 +121,7 @@ let createNewUser = (data) => {
                 errCode: 0,
                 errMessage: 'OK',
             });
-
+            }
         } catch (e) {
             reject(e);
         }
@@ -147,7 +146,7 @@ let hashUserPassword = (password) => {
 let deleteUser = (userId) => {
     return new Promise(async (resolve, reject) => {
         let user = await db.User.findOne({
-            where: { id: userId }
+            where: { id: userId },
         })
         if (!user) {
             resolve({
@@ -155,9 +154,9 @@ let deleteUser = (userId) => {
                 errMessage: `The user isn't exist in the database`
             })
         }
-        // if(user) {
-        //     await user.destroy();
-        // }
+        /* if(user) {
+            await user.destroy();
+        } */
         await db.User.destroy({
             where: { id: userId }
         })

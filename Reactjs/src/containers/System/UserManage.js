@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers } from '../../services/userService';
+import { getAllUsers, createNewUserService } from '../../services/userService';
 import ModalUser from './ModalUser';
 
 class UserManage extends Component {
@@ -16,18 +16,8 @@ class UserManage extends Component {
         }
     }
 
-    
-
     async componentDidMount() {
-        let response = await getAllUsers('ALL');
-        if(response && response.errCode === 0) {
-            this.setState({
-                arrUsers: response.users
-            }, () => {
-                console.log('check state user 1 ', this.state.arrUsers);
-            });
-            console.log('check state user 2', this.state.arrUsers);
-        }
+        await this.getAllUserFromReact();
     }
     
     handleAddNewUser = () => {
@@ -41,6 +31,31 @@ class UserManage extends Component {
             isOpenModalUser: !this.state.isOpenModalUser,
         });
     }
+
+    getAllUserFromReact = async () => {
+        let response = await getAllUsers('ALL');
+        if(response && response.errCode === 0) {
+            this.setState({
+                arrUsers: response.users
+            });
+        }
+    }
+
+    createNewUser = async (data) => {
+        try {
+            let response = await createNewUserService(data);
+            if(response && response.errCode !== 0) {
+                alert(response.errMessage);
+            } else {
+                await this.getAllUserFromReact();
+                this.setState({
+                    isOpenModalUser:false,
+                });
+            }         
+        } catch (e) {
+            console.log(e);
+        }
+    }
     /** Life cycle
      *  Run Component:
      * 1. Run Constructor -> Init state
@@ -49,11 +64,13 @@ class UserManage extends Component {
      */
 
     render() {
-        console.log('chech render ', this.state)
         let arrUsers = this.state.arrUsers;
         return (
             <div className="users-container">
-                <ModalUser isOpen={ this.state.isOpenModalUser } toggleFromParent={ this.toggleUserModal } />
+                <ModalUser isOpen={ this.state.isOpenModalUser } toggleFromParent={ this.toggleUserModal } 
+                createNewUser = { this.createNewUser}
+                />
+
                 <div className="title text-center">Manage User With React</div>
                 <div className="mx-1">
                     <button className='btn btn-primary px-3' onClick={() => this.handleAddNewUser()}>
