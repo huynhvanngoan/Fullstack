@@ -32,6 +32,7 @@ button.btn-edit {
     outline: none;
     background: transparent;
     color: rgb(241, 180, 66);
+
     &:hover {
         background-color: transparent !important;
         color: orange !important;
@@ -44,8 +45,44 @@ button.btn-delete {
     outline: none;
     background: transparent;
     color: rgb(238, 106, 106);
+
     &:hover {
         background-color: transparent !important;
         color: red !important;
+    }
+}
+
+.model-user-container {
+    .modal-header {
+        button {
+            background-color: transparent !important;
+            border: none !important;
+            color: white;
+            font-size: 23px;
+        }
+    }
+
+    .modal-user-body {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            width: 48.6%;
+
+            &.max-width-input {
+                width: 100%;
+            }
+
+            input {
+                border-radius: 3px;
+                border: 1px solid grey;
+                height: 30px;
+                outline: none;
+                padding: 0 10px;
+            }
+        }
     }
 }
