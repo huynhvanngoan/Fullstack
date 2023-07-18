@@ -162,7 +162,7 @@ let deleteUser = (userId) => {
         })
         resolve({
             errCode: 0,
-            errCode: 'The user is deleted'
+            errMessage: 'The user is deleted'
         })
     });
 }
